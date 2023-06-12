@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dwitter Login</title>
+</head>
+<body>
+    <style>
+    h5{
+     color:red;
+    }
+    </style>
+    {%for message in messages%}
+    <h5>{{message}}</h5>
+    {%endfor%}
+    <form method="post" action="register">
+        {%csrf_token%}
+        <p>First name </p><input type="text" name="firstname" required><br>
+        <p>Last name</p><input type="text" name="lastname" required><br>
+        <p>Username </p><input type="text" name="username" required><br>
+        <p>Password </p><input type="password" name="password" required>
+        <p> Retype Password </p><input type="password" name="retypepassword" required>
+        <input type="submit" name="submit">
+    </form>
+</body>
+</html>

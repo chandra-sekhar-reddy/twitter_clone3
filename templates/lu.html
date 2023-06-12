@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{%for u in users%}
+    {%if u.username != cur%}
+    {{u.username}}
+    {%if u.username not in pf.following%}
+    <form action="follow" method="post">
+        {%csrf_token%}
+        <input type="hidden" name="u_username" value="{{u.username}}">
+        <button>Follow</button>
+    </form><br>
+    {%else%}
+    <form action="unfollow" method="post">
+        {%csrf_token%}
+        <input type="hidden" name="u_username" value="{{u.username}}">
+        <button>Unfollow</button>
+    </form><br>
+    {%endif%}
+    {%endif%}
+{%endfor%}
+  
+
+
+
+</body>
+</html>

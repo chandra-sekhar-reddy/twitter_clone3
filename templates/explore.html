@@ -1,0 +1,244 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Home</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f8fa;
+            background-image: url("{%static 'tb2.jpg'%}");
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background-image: url("{%static 'tb5.jpg'%}");
+            border-radius: 10px;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #bbb;
+            margin-right: 10px;
+            border: #00090c;
+        }
+
+        .logout-button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
+
+        .tweet-section {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tweet-input {
+            width: 90%;
+            height: 100px;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .tweet-button {
+            background-color: #00aced;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .tweet-button:hover {
+            background-color: #0084b4;
+        }
+        
+        /* Styling for individual tweets */
+        .tweet-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .tweet-box {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 0px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .tweet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #bbb;
+            margin-right: 10px;
+        }
+        
+        .tweet-info {
+            flex-grow: 1;
+        }
+        
+        .tweet-username {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .tweet-time {
+            font-size: 12px;
+            color: #777;
+            margin: 0;
+        }
+        
+        .tweet-content {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        /* Styling for search container */
+        .search-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .search-container input[type="text"] {
+            padding: 6px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            width: 200px;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .search-container button {
+            padding: 6px 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        /* Styling for error messages */
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .invisible-link{
+            text-decoration: none;
+            color: #00090c; 
+            border:whitesmoke
+        }
+        .likecomshare{
+            color: darkblue;
+        }
+        h1{
+            text-shadow: 0 0 3px goldenrod, 0 0 5px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            {%for i in '0'%}
+                 &nbsp;
+                 {%endfor%}
+            <a href="home" class="profile-link">
+                <div class="profile-picture"><img src="{%static 'twitterlogo.png'%}" alt="net ravtledura pumka" width="100" height="100" class="profile-picture"></div>
+                <span class="invisible-link"><h1>{{curuser}}</h1></span>
+            </a>{%for i in '012345678901234567890123456789012345678901234567890123456789'%}
+                 &nbsp;
+                 {%endfor%}
+            <form action="logout"><button class="logout-button">Logout</button></form>&nbsp;
+        </div>
+
+        <div class="tweet-section">
+            <form method="post" action="addtweet">
+                {% csrf_token %}
+                <textarea name="tweetinput" class="tweet-input" placeholder="What's happening?" required></textarea>
+                <button class="tweet-button">Tweet</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+    {% for key, value_list in pf.followingtweet.items reversed%}
+        {% for value in value_list reversed %}
+            <div class="tweet-container">
+                <div class="tweet-box">
+                    <div class="tweet-header">
+                        <div class="tweet-avatar"><img src="{%static 'twitterlogo.png'%}" alt="net ravtledura pumka" width="100" height="100" class="profile-picture"></div>
+                        <div class="tweet-info">
+                            <h3 class="tweet-username"><a href="pagevisit?data={{key}}" class="invisible-link">{{key}}</a></h3>
+                            <p class="tweet-time"></p>
+                        </div>
+                    </div>
+                    <div class="tweet-input">
+                        <p class="tweet-content">{{ value }}</p>
+                    </div>
+                    <div class="likecomshare"><h4>Like&nbsp;    &nbsp;                &nbsp;          Comment&nbsp;         &nbsp;           &nbsp;        Share</h4></div>
+                </div>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="search-container">
+        <form action="pagevisit" method="get">
+            <input type="text" placeholder="Search..." name="data">
+            <button type="submit">Search</button>
+        </form>
+        {% for message in messages %}
+            <h4 class="error-message">{{ message }}</h4>
+        {% endfor %}
+    </div>
+</body>
+</html>
